@@ -121,7 +121,7 @@ string CNN::arch() const {
     if (add == "") {
         add = "{}";
     } else if (!add.empty() && add[0] == ' ') {
-        add = add.substr(1, int(add.size()) - 1);
+        add = string("{") + add.substr(1, int(add.size()) - 1);
     }
     s += "}, " + add + "}";
     return s;
