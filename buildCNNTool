@@ -1,0 +1,8 @@
+#!/bin/bash
+
+g++ -c CNNTool/Code/CNNTool.cpp                                                     \
+-I PerceptronTool/Headers/                                                          \
+-I ImageTool/Headers/                                                               \
+-I CNNTool/Headers/                                                                 \
+-std=c++17 -O3 -Wall -Wextra -L/usr/lib -ljpeg -lGL -lGLU -lglut -std=c++17         \
+

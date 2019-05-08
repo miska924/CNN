@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# ./buildPerceptronTool
+# ./buildImageTool
+# ./buildCNNTool
+
+g++ main.cpp                                                                        \
+PerceptronTool.o ImageTool.o CNNTool.o -o bin                                       \
+-I PerceptronTool/Headers/                                                          \
+-I ImageTool/Headers/                                                               \
+-I CNNTool/Headers/                                                                 \
+-std=c++17 -O3 -Wall -Wextra -L/usr/lib -ljpeg -lGL -lGLU -lglut -std=c++17         \
+
