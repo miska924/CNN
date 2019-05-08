@@ -95,10 +95,8 @@ vector<double> CNN::run(const Image& im) {
             pl[1][i + 1] = pp[1];
             lay.apply(CNN_adapting_func);
         }
-        // lay.apply(CNN_adapting_func);
         out[i + 1] = lay;
     }
-    // cerr << "kek : " << lay.vec()[0] << endl;
     return p.run(lay.vec());
 }
 
@@ -129,23 +127,9 @@ string CNN::arch() const {
 
 void CNN::teach(const Image& im, const vector<double>& correct, double n) {
     clear();
-    // for (int i = 0; i < a.size() + 1; ++i) {
-    //     cerr << in[i].size() << "x" << in[i].h() << "x" << in[i].w() << " & "
-    //          << delta[i].size() << "x" << delta[i].h() << "x" << delta[i].w() << " && "
-    //          << out[i].size() << "x" << out[i].h() << "x" << out[i].w() << endl;
-    // }
-    // cerr << "-------------------" << endl;
     vector<double> got = run(im);
     p.teach(out.back().vec(), correct, n, 1);
     delta.back().fill(p.d());
-    // for (int i = 0; i < delta[a.size()].size(); ++i) {
-    //     for (int j = 0; j < delta[a.size()].h(); ++j) {
-    //         for (int k = 0; k < delta[a.size()].w(); ++k) {
-    //             delta[a.size()][i][j][k] *= CNN_adapting_funcs(in[a.size()][i][j][k]);
-    //             cerr << fixed << setprecision(7) << (delta[a.size()][i][j][k]) << " ";
-    //         }
-    //     }
-    // }
     for (int lay = int(a.size()) - 1; lay >= 0; --lay) {
         for (int k1 = 0; k1 < out[lay].size(); ++k1) {
             for (int i = 0; i < out[lay].h(); ++i) {
