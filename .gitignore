@@ -3,3 +3,5 @@ CNNTool.o
 PerceptronTool.o
 ImageTool.o
 CNNswap
+test.cpp
+buildTest

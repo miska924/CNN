@@ -13,7 +13,15 @@ inline void get(string s) {
         }
         check.close();
         Image im(string("tests/") + s + "/" + to_string(test) + ".jpg");
-        vec.push_back(pair<Image, vector<double> >{im, vector<double>{double(int(s == "zero")), double(int(s == "one"))}});
+        vec.push_back(
+            pair<Image, vector<double> {
+                im,
+                vector<double> {
+                    double(int(s == "zero")),
+                    double(int(s == "one"))
+                }
+            }
+        );
     }
 }
 
@@ -22,15 +30,22 @@ void put() {
     zero = one = none = 0;
     for (int i = 0; i < int(vec.size()); ++i) {
         string s;
-        if (vec[i].second[0] > 0.5)         vec[i].first.write(string("tests/zero/") + to_string(zero++) + ".jpg");
-        else if (vec[i].second[1] > 0.5)    vec[i].first.write(string("tests/one/" ) + to_string(one++ ) + ".jpg");
-        else                                vec[i].first.write(string("tests/none/") + to_string(none++) + ".jpg");
+        if (vec[i].second[0] > 0.5) {
+            vec[i].first.write(string("tests/zero/") +
+                            to_string(zero++) + ".jpg");
+        } else if (vec[i].second[1] > 0.5) {
+            vec[i].first.write(string("tests/one/" ) +
+                            to_string(one++ ) + ".jpg");
+        } else {
+            vec[i].first.write(string("tests/none/") +
+                            to_string(none++) + ".jpg");
+        }
     }
 }
 
 inline int teach(string netfile) {
     srand(time(NULL));
-    CNN net(netfile);// ({4, 4, 8, 8, 16, 16, 8, 8, 4, 4, 4, 4}, {8, 2});
+    CNN net(netfile);
     cerr << net.arch() << endl;
     get("one");
     get("zero");
@@ -51,7 +66,8 @@ inline int teach(string netfile) {
             // random_shuffle(vec.begin(), vec.begin() + loop);
             for (int i = 0; i < loop; ++i) {
                 res = net.run(vec[i].first);
-                double err = abs(res[0] - vec[i].second[0]) + abs(res[1] - vec[i].second[1]);
+                double err = abs(res[0] - vec[i].second[0]) +
+                             abs(res[1] - vec[i].second[1]);
                 mx = max(mx, err);
                 sum += err;
             }
@@ -61,21 +77,17 @@ inline int teach(string netfile) {
                         net.teach(last.first, last.second, 0.01);
                     }
                     res = net.run(vec[i].first);
-                    double err = abs(res[0] - vec[i].second[0]) + abs(res[1] - vec[i].second[1]);
+                    double err = abs(res[0] - vec[i].second[0]) +
+                                 abs(res[1] - vec[i].second[1]);
                     if (err > 0.1) {
                         net.teach(vec[i].first, vec[i].second, 0.01);
                     }
-                    // res = net.run(vec[i].first);
-                    // while (abs(res[0] - vec[i].second[0]) + abs(res[1] - vec[i].second[1]) > 0.5) {
-                    //     net.teach(vec[i].first, vec[i].second, 0.5); // was 0.05
-                    // }
                 }
                 if (cnt % 10 == 0) {
-                    if (cnt == 500) {
-                        // last.first.show();
-                    }
-                    // net.write("CNNswap");
-                    cerr << fixed << setprecision(7) << "\n#" << loop << "." << cnt << "\nmax error    : " << mx << "\naverage error: " << sum / (loop) << endl;
+                    cerr << fixed << setprecision(7)
+                         << "\n#" << loop << "." << cnt
+                         << "\nmax error    : " << mx
+                         << "\naverage error: " << sum / (loop) << endl;
                 }
             } else {
                 break;
@@ -87,13 +99,22 @@ inline int teach(string netfile) {
             im.paint();
 
             res = net.run(im);
-            cout << int(res[1] > res[0]) << " precision: " << abs(res[0] - res[1]) << endl;
+            cout << int(res[1] > res[0])
+                 << " precision: " << abs(res[0] - res[1]) << endl;
             int got;
             cin >> got;
             if (got == 10) {
                 break;
             }
-            vec.push_back(pair<Image, vector<double> >{im, vector<double>{double(int(got == 0)), double(int(got == 1))}});
+            vec.push_back(
+                pair<Image, vector<double> > {
+                    im,
+                    vector<double> {
+                        double(int(got == 0)),
+                        double(int(got == 1))
+                    }
+                }
+            );
             put();
         }
         last = vec[loop];
@@ -103,7 +124,6 @@ inline int teach(string netfile) {
     return 0;
 }
 
-
 void run(string netfile) {
     CNN net(netfile);
     cout << "0-1 DETECTOR\narch: " << net.arch() << endl;
@@ -111,7 +131,8 @@ void run(string netfile) {
         Image im;
         im.paint();
         vector<double> res = net.run(im);
-        cout << int(res[1] > res[0]) << " precision: " << abs(res[0] - res[1]) << endl;
+        cout << int(res[1] > res[0])
+             << " precision: " << abs(res[0] - res[1]) << endl;
     }
 }
 
