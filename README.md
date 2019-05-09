@@ -6,10 +6,12 @@ make difference between ZERO and ONE on a picture you drawn
 
 You can use this tool only if you have linux
 First of all you need to install something to run my tool
+
   sudo apt-get install freeglut3 freeglut3-dev libglew1.5 libglew1.5-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev mesa-common-dev
   sudo apt-get install libboost-dev
 
 When you've done it you should make some files executable
+
   sudo chmod +x build
   sudo chmod +x buildCNNTool
   sudo chmod +x buildPerceptronTool
@@ -17,6 +19,7 @@ When you've done it you should make some files executable
   sudo chmod +x bin
 
 You can just run binary file to make sure that it works(but not so perfect)
+
   ./bin
 
 Draw number(0 or 1) and close PAINT TOOL window.
