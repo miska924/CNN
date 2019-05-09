@@ -16,7 +16,13 @@ When you've done it you should make some files executable
   sudo chmod +x buildCNNTool
   sudo chmod +x buildPerceptronTool
   sudo chmod +x buildImageTool
-  sudo chmod +x bin
+
+You need to build project
+
+  ./buildImageTool
+  ./buildPerceptronTool
+  ./buildCNNTool
+  ./build
 
 You can just run binary file to make sure that it works(but not so perfect)
 
@@ -27,6 +33,3 @@ You can see answer of my CNN which number it is in terminal
 where you run application.
 This is loop, so you can draw while you want.
 You can quit my tool (CTRL + C).
-
-
-  
