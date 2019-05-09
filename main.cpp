@@ -14,7 +14,7 @@ inline void get(string s) {
         check.close();
         Image im(string("tests/") + s + "/" + to_string(test) + ".jpg");
         vec.push_back(
-            pair<Image, vector<double> {
+            pair<Image, vector<double> > {
                 im,
                 vector<double> {
                     double(int(s == "zero")),
@@ -94,7 +94,7 @@ inline int teach(string netfile) {
             }
         }
         net.write("CNNswap");
-        if (loop == vec.size()) {
+        if (loop == int(vec.size())) {
             Image im;
             im.paint();
 
