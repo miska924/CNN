@@ -2,7 +2,7 @@ int PAINT_X;
 int PAINT_Y;
 double PAINT_SZX, PAINT_SZY;
 double mouse_wasX, mouse_wasY;
-const double PAINT_SZ = 1e5;
+const double PAINT_SZ = 2e5;
 Image PAINT_im;
 int PAINT_PAINT;
 double PAINT_mouseX = 0, PAINT_mouseY = 0;
@@ -116,7 +116,7 @@ void Image::paint(int d) {
     glutMouseFunc(PAINT_mouseButton);
     glutMotionFunc(PAINT_mouseMove);
     glutPassiveMotionFunc(PAINT_mouseMove);
-    
+
     PAINT_Initialize();
 
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
