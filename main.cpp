@@ -2,16 +2,17 @@
 #include "CNNTool.h"
 
 vector<pair<Image, vector<double> > > vec;
+vector<int> who;
 
 inline void get(string s) {
     for (int test = 0;; ++test) {
-        cerr << s << ": " << test << endl;
         ifstream check(string("tests/") + s + "/" + to_string(test) + ".jpg");
         if (!check) {
             check.close();
             break;
         }
         check.close();
+        cerr << s << ": " << test << endl;
         Image im(string("tests/") + s + "/" + to_string(test) + ".jpg");
         vec.push_back(
             pair<Image, vector<double> > {
@@ -22,6 +23,7 @@ inline void get(string s) {
                 }
             }
         );
+        who.push_back(who.size());
     }
 }
 
@@ -46,6 +48,7 @@ void put() {
 inline int teach(string netfile) {
     srand(time(NULL));
     CNN net(netfile);
+    net.write("CNNtemp");
     cerr << net.arch() << endl;
     get("one");
     get("zero");
@@ -54,7 +57,7 @@ inline int teach(string netfile) {
     // for (int i = 0; i < int(vec.size()); ++i) {
     //     vec[i].first.show();
     // }
-    // random_shuffle(vec.begin(), vec.end());
+    random_shuffle(who.begin(), who.end());
     pair<Image, vector<double> > last;
     int loop = 0;
     while (true) {
@@ -63,11 +66,11 @@ inline int teach(string netfile) {
         while (true) {
             cnt++;
             double mx = 0, sum = 0;
-            // random_shuffle(vec.begin(), vec.begin() + loop);
+            random_shuffle(who.begin(), who.begin() + loop);
             for (int i = 0; i < loop; ++i) {
-                res = net.run(vec[i].first);
-                double err = abs(res[0] - vec[i].second[0]) +
-                             abs(res[1] - vec[i].second[1]);
+                res = net.run(vec[who[i]].first);
+                double err = abs(res[0] - vec[who[i]].second[0]) +
+                             abs(res[1] - vec[who[i]].second[1]);
                 mx = max(mx, err);
                 sum += err;
             }
@@ -76,11 +79,11 @@ inline int teach(string netfile) {
                     if (i % 10 == 0) {
                         net.teach(last.first, last.second, 0.01);
                     }
-                    res = net.run(vec[i].first);
-                    double err = abs(res[0] - vec[i].second[0]) +
-                                 abs(res[1] - vec[i].second[1]);
+                    res = net.run(vec[who[i]].first);
+                    double err = abs(res[0] - vec[who[i]].second[0]) +
+                                 abs(res[1] - vec[who[i]].second[1]);
                     if (err > 0.1) {
-                        net.teach(vec[i].first, vec[i].second, 0.01);
+                        net.teach(vec[who[i]].first, vec[who[i]].second, 0.01);
                     }
                 }
                 if (cnt % 10 == 0) {
@@ -93,7 +96,7 @@ inline int teach(string netfile) {
                 break;
             }
         }
-        net.write("CNNswap");
+        net.write("CNNtemp");
         if (loop == int(vec.size())) {
             Image im;
             im.paint();
@@ -103,8 +106,10 @@ inline int teach(string netfile) {
                  << " precision: " << abs(res[0] - res[1]) << endl;
             int got;
             cin >> got;
-            if (got == 10) {
+            if (got == -2) {
                 break;
+            } else if (got == -1) {
+                continue;
             }
             vec.push_back(
                 pair<Image, vector<double> > {
@@ -115,9 +120,10 @@ inline int teach(string netfile) {
                     }
                 }
             );
+            who.push_back(who.size());
             put();
         }
-        last = vec[loop];
+        last = vec[who[loop]];
         loop = min(loop + 1, int(vec.size()));
     }
     net.write(netfile);
