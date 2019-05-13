@@ -18,7 +18,7 @@ const Layer& Cluster::operator[](int x) const {
     return a[x];
 }
 
-void Cluster::read(ifstream& in) {
+void Cluster::read(std::ifstream& in) {
     int sz;
     in >> sz;
     a.assign(sz, Layer());
@@ -27,7 +27,7 @@ void Cluster::read(ifstream& in) {
     }
 }
 
-void Cluster::write(ofstream& out) {
+void Cluster::write(std::ofstream& out) {
     out << " " << a.size() << "\n";
     for (int i = 0; i < size(); ++i) {
         a[i].write(out);

@@ -6,16 +6,16 @@ class Layer {
         int size() const;
         int h() const;
         int w() const;
-        void read(ifstream& in);
-        void write(ofstream& out);
+        void read(std::ifstream& in);
+        void write(std::ofstream& out);
         void transform(const Cluster& cl);
         void transform(const Layer& lay);
-        vector<Layer> pool(bool plg = true);
+        std::vector<Layer> pool(bool plg = true);
         void apply(double (*f)(double));
-        vector<double> vec();
-        void fill(const vector<double>& vec);
+        std::vector<double> vec();
+        void fill(const std::vector<double>& vec);
         Scalp& operator[](int x);
         const Scalp& operator[](int x) const;
     private:
-        vector<Scalp> a;
+        std::vector<Scalp> a;
 };

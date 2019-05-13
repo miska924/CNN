@@ -1,5 +1,5 @@
 Scalp::Scalp(int h, int w, bool rnd) {
-    a.assign(h, vector<double>(w));
+    a.assign(h, std::vector<double>(w));
     if (rnd) {
         for (int i = 0; i < h; ++i) {
             for (int j = 0; j < w; ++j) {
@@ -13,11 +13,11 @@ Scalp::~Scalp() {
     a.clear();
 }
 
-vector<double>& Scalp::operator[](int x) {
+std::vector<double>& Scalp::operator[](int x) {
     return a[x];
 }
 
-const vector<double>& Scalp::operator[](int x) const {
+const std::vector<double>& Scalp::operator[](int x) const {
     return a[x];
 }
 
@@ -32,10 +32,10 @@ int Scalp::w() const {
     return a[0].size();
 }
 
-void Scalp::read(ifstream& in) {
+void Scalp::read(std::ifstream& in) {
     int n, m;
     in >> n >> m;
-    a.assign(n, vector<double>(m));
+    a.assign(n, std::vector<double>(m));
     for (int i = 0; i < h(); ++i) {
         for (int j = 0; j < w(); ++j) {
             in >> a[i][j];
@@ -43,7 +43,7 @@ void Scalp::read(ifstream& in) {
     }
 }
 
-void Scalp::write(ofstream& out) {
+void Scalp::write(std::ofstream& out) {
     out << "   " << h() << " " << w() << "\n";
     for (int i = 0; i < h(); ++i) {
         out << "    ";
@@ -53,7 +53,7 @@ void Scalp::write(ofstream& out) {
             } else {
                 out << "-";
             }
-            out << fixed << setprecision(7) << abs(a[i][j]) << " ";
+            out << std::fixed << std::setprecision(7) << abs(a[i][j]) << " ";
         }
         out << "\n";
     }

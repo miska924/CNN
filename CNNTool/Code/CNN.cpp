@@ -8,11 +8,11 @@ CNN::~CNN() {
     p = Perceptron();
 }
 
-CNN::CNN(const string& path) {
+CNN::CNN(const std::string& path) {
     (*this).read(path);
 }
 
-CNN::CNN(const vector<int>& cl, vector<int> pt) {
+CNN::CNN(const std::vector<int>& cl, std::vector<int> pt) {
     int cur = 3;
     a.assign(cl.size(), Cluster());
     for (int i = 0; i < int(a.size()); ++i) {
@@ -29,8 +29,8 @@ CNN::CNN(const vector<int>& cl, vector<int> pt) {
     p = Perceptron(pt, true);
 }
 
-void CNN::read(const string& path) {
-    ifstream inp(path.c_str());
+void CNN::read(const std::string& path) {
+    std::   ifstream inp(path.c_str());
     int sz;
     inp >> sz;
     a.assign(sz, Cluster());
@@ -42,8 +42,8 @@ void CNN::read(const string& path) {
     clear();
 }
 
-void CNN::write(const string& path) {
-    ofstream out(path.c_str());
+void CNN::write(const std::string& path) {
+    std::ofstream out(path.c_str());
     out << a.size() << "\n";
     for (int i = 0; i < int(a.size()); ++i) {
         a[i].write(out);
@@ -54,7 +54,7 @@ void CNN::write(const string& path) {
 
 double CNN_adapting_func(double x) {
     return 1.0 / (1.0 + exp(-x));
-    return max(0.0, x);
+    return std::max(0.0, x);
 }
 
 double CNN_adapting_funcs(double x) {
@@ -69,7 +69,7 @@ void CNN::clear() {
     in.assign(a.size() + 1, Layer());
     out.assign(a.size() + 1, Layer());
     delta.assign(a.size() + 1, Layer());
-    pl.assign(2, vector<Layer>(a.size() + 1, Layer()));
+    pl.assign(2, std::vector<Layer>(a.size() + 1, Layer()));
     int winsz = 32;
     in[0] = out[0] = delta[0] = Layer(3, winsz, winsz);
     for (int i = 0; i < int(a.size()); ++i) {
@@ -81,7 +81,7 @@ void CNN::clear() {
     }
 }
 
-vector<double> CNN::run(const Image& im) {
+std::vector<double> CNN::run(const Image& im) {
     Layer lay(im);
     in[0] = lay;
     lay.apply(CNN_adapting_func);
@@ -90,7 +90,7 @@ vector<double> CNN::run(const Image& im) {
         lay.transform(a[i]);
         in[i + 1] = lay;
         if (i < int(a.size()) - 1) {
-            vector<Layer> pp = lay.pool();
+            std::vector<Layer> pp = lay.pool();
             pl[0][i + 1] = pp[0];
             pl[1][i + 1] = pp[1];
             lay.apply(CNN_adapting_func);
@@ -101,16 +101,16 @@ vector<double> CNN::run(const Image& im) {
     return p.run(lay.vec());
 }
 
-string CNN::arch() const {
-    string s = "{{";
+std::string CNN::arch() const {
+    std::string s = "{{";
     for (int i = 0; i < int(a.size()); ++i) {
-        s += to_string(a[i].size()) + ", ";
+        s += std::to_string(a[i].size()) + ", ";
     }
     if (a.size()) {
         s.pop_back();
         s.pop_back();
     }
-    string add = p.arch();
+    std::string add = p.arch();
     for (int i = 0; i < int(add.size()); ++i) {
         if (add[i] == ',' || add[i] == '}') {
             add = add.substr(i + 1, int(add.size()) - i - 1);
@@ -120,15 +120,15 @@ string CNN::arch() const {
     if (add == "") {
         add = "{}";
     } else if (!add.empty() && add[0] == ' ') {
-        add = string("{") + add.substr(1, int(add.size()) - 1);
+        add = std::string("{") + add.substr(1, int(add.size()) - 1);
     }
     s += "}, " + add + "}";
     return s;
 }
 
-void CNN::teach(const Image& im, const vector<double>& correct, double n) {
+void CNN::teach(const Image& im, const std::vector<double>& correct, double n) {
     clear();
-    vector<double> got = run(im);
+    std::vector<double> got = run(im);
     p.teach(out.back().vec(), correct, n, 1);
     delta.back().fill(p.d());
     for (int lay = int(a.size()) - 1; lay >= 0; --lay) {

@@ -10,7 +10,7 @@ double PAINT_mouseX = 0, PAINT_mouseY = 0;
 void PAINT_printInfo() {
     glColor3f(1, 0, 0);
     glRasterPos2f(3, 3);
-    string s = to_string(PAINT_mouseX) + "   " + to_string(PAINT_mouseY);
+    std::string s = std::to_string(PAINT_mouseX) + "   " + std::to_string(PAINT_mouseY);
     for (int i = 0; i < int(s.size()); ++i) {
         glutBitmapCharacter(GLUT_BITMAP_9_BY_15, s[i]);
     }
@@ -26,7 +26,9 @@ void PAINT_Draw() {
     for (int i = 0; i < PAINT_X; ++i) {
         for (int j = 0; j < PAINT_Y; ++j) {
             glBegin(GL_POLYGON);
-                glColor3f(double(PAINT_im[i][j][0]) / 255, double(PAINT_im[i][j][1]) / 255, double(PAINT_im[i][j][2]) / 255);
+                glColor3f(double(PAINT_im[i][j][0]) / 255,
+                          double(PAINT_im[i][j][1]) / 255,
+                          double(PAINT_im[i][j][2]) / 255);
                 glVertex2f(i, j);
                 glVertex2f(i + 1, j);
                 glVertex2f(i + 1, j + 1);
@@ -53,13 +55,14 @@ void PAINT_Timer(int value) {
 }
 
 void PAINT_mouseMove(int x, int y) {
-	PAINT_mouseX = min(PAINT_X - 0.1, max(0.1, double(y) / PAINT_SZX * PAINT_X));
-    PAINT_mouseY = min(PAINT_Y - 0.1, max(0.1, double(x) / PAINT_SZY * PAINT_Y));
+	PAINT_mouseX = std::min(PAINT_X - 0.1, std::max(0.1, double(y) / PAINT_SZX * PAINT_X));
+    PAINT_mouseY = std::min(PAINT_Y - 0.1, std::max(0.1, double(x) / PAINT_SZY * PAINT_Y));
     if (PAINT_PAINT) {
         double plusX = (PAINT_mouseX - mouse_wasX) / 10;
         double plusY = (PAINT_mouseY - mouse_wasY) / 10;
         for (int i = 0; i <= 10; ++i) {
-            PAINT_im[int(PAINT_mouseX - plusX * i)][int(PAINT_mouseY - plusY * i)] = vector<int>(3, 255 * int(PAINT_PAINT == 2));
+            PAINT_im[int(PAINT_mouseX - plusX * i)][int(PAINT_mouseY - plusY * i)] =
+                std::vector<int>(3, 255 * int(PAINT_PAINT == 2));
         }
     }
     mouse_wasX = PAINT_mouseX;
@@ -67,8 +70,8 @@ void PAINT_mouseMove(int x, int y) {
 }
 
 void PAINT_mouseButton(int button, int state, int x, int y) {
-    PAINT_mouseX = min(PAINT_X - 0.1, max(0.1, double(y) / PAINT_SZX * PAINT_X));
-    PAINT_mouseY = min(PAINT_Y - 0.1, max(0.1, double(x) / PAINT_SZY * PAINT_Y));
+    PAINT_mouseX = std::min(PAINT_X - 0.1, std::max(0.1, double(y) / PAINT_SZX * PAINT_X));
+    PAINT_mouseY = std::min(PAINT_Y - 0.1, std::max(0.1, double(x) / PAINT_SZY * PAINT_Y));
     if (button == GLUT_RIGHT_BUTTON) {
         if (state == GLUT_DOWN) {
             PAINT_PAINT = 2;
@@ -87,7 +90,8 @@ void PAINT_mouseButton(int button, int state, int x, int y) {
         }
     }
     if (PAINT_PAINT) {
-        PAINT_im[int(PAINT_mouseX)][int(PAINT_mouseY)] = vector<int>(3, 255 * int(PAINT_PAINT == 2));
+        PAINT_im[int(PAINT_mouseX)][int(PAINT_mouseY)] =
+            std::vector<int>(3, 255 * int(PAINT_PAINT == 2));
     }
 }
 
@@ -121,7 +125,7 @@ void Image::paint(int d) {
 
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 
-    PAINT_im = Image(PAINT_X, PAINT_Y, 3, vector<int>(3, 255));
+    PAINT_im = Image(PAINT_X, PAINT_Y, 3, std::vector<int>(3, 255));
 
     glutMainLoop();
 

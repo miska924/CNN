@@ -1,24 +1,13 @@
-// #pragma GCC optimize("Ofast,no-stack-protector")
-// #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2,tune=native")
-// #pragma GCC optimize("unroll-loops")
-// #pragma GCC optimize("fast-math")
-// #pragma GCC optimize("section-anchors")
-// #pragma GCC optimize("profile-values,profile-reorder-functions,tracer")
-// #pragma GCC optimize("vpt")
-// #pragma GCC optimize("rename-registers")
-// #pragma GCC optimize("move-loop-invariants")
-// #pragma GCC optimize("unswitch-loops")
-// #pragma GCC optimize("function-sections")
-// #pragma GCC optimize("data-sections")
-// #pragma GCC optimize("branch-target-load-optimize")
-// #pragma GCC optimize("branch-target-load-optimize2")
-// #pragma GCC optimize("btr-bb-exclusive")
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <math.h>
+#include <iomanip>
+#include <cassert>
+#include <string>
 
-#include <bits/stdc++.h>
 #include "ImageTool.h"
 #include "PerceptronTool.h"
-
-using namespace std;
 
 class Scalp;
 class Layer;

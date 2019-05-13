@@ -79,10 +79,10 @@ void Layer::transform(const Cluster& cl) {
     (*this) = res;
 }
 
-vector<Layer> Layer::pool(bool plg) {
-    vector<Layer> pl;
+std::vector<Layer> Layer::pool(bool plg) {
+    std::vector<Layer> pl;
     if (plg) {
-        pl = vector<Layer>(2, Layer(size(), (h() + 1) / 2, (w() + 1) / 2));
+        pl = std::vector<Layer>(2, Layer(size(), (h() + 1) / 2, (w() + 1) / 2));
         Layer res(size(), (h() + 1) / 2, (w() + 1) / 2);
         for (int k = 0; k < res.size(); ++k) {
             for (int i = 0; i < res.h(); ++i) {
@@ -104,7 +104,7 @@ vector<Layer> Layer::pool(bool plg) {
         }
         (*this) = res;
     } else {
-        pl = vector<Layer>(2, Layer(size(), h(), w()));
+        pl = std::vector<Layer>(2, Layer(size(), h(), w()));
         for (int k = 0; k < size(); ++k) {
             for (int i = 0; i < h(); ++i) {
                 for (int j = 0; j < w(); ++j) {
@@ -117,8 +117,8 @@ vector<Layer> Layer::pool(bool plg) {
     return pl;
 }
 
-vector<double> Layer::vec() {
-    vector<double> res;
+std::vector<double> Layer::vec() {
+    std::vector<double> res;
     for (int k = 0; k < size(); ++k) {
         for (int i = 0; i < h(); ++i) {
             for (int j = 0; j < w(); ++j) {
@@ -129,7 +129,7 @@ vector<double> Layer::vec() {
     return res;
 }
 
-void Layer::fill(const vector<double>& vec) {
+void Layer::fill(const std::vector<double>& vec) {
     assert(int(vec.size()) == size() * h() * w());
     for (int i = 0; i < int(vec.size()); ++i) {
         a[i / w() / h()][i / w() % h()][i % w()] = vec[i];
@@ -142,11 +142,11 @@ void Layer::apply(double (*f)(double)) {
             for (int j = 0; j < w(); ++j) {
                 a[k][i][j] = f(a[k][i][j]);
             }
-        } 
+        }
     }
 }
 
-void Layer::read(ifstream& in) {
+void Layer::read(std::ifstream& in) {
     int sz;
     in >> sz;
     a.assign(sz, Scalp());
@@ -155,7 +155,7 @@ void Layer::read(ifstream& in) {
     }
 }
 
-void Layer::write(ofstream& out) {
+void Layer::write(std::ofstream& out) {
     out << "  " << size() << "\n";
     for (int i = 0; i < size(); ++i) {
         a[i].write(out);
