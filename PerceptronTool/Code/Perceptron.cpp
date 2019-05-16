@@ -5,41 +5,41 @@ Perceptron::Perceptron() {
     delta.clear();
 }
 
-Perceptron::Perceptron(ifstream& in) {
+Perceptron::Perceptron(std::ifstream& in) {
     (*this).read(in);
 }
 
-Perceptron::Perceptron(const vector<int>& pt, bool rnd) {
+Perceptron::Perceptron(const std::vector<int>& pt, bool rnd) {
     vec.assign(int(pt.size()) - 1, Matrix());
     for (int i = 0; i < int(pt.size()) - 1; ++i) {
         vec[i] = Matrix(pt[i], pt[i + 1], rnd);
     }
-    in.assign(pt.size(), vector<double>(0));
-    out.assign(pt.size(), vector<double>(0));
-    delta.assign(pt.size(), vector<double>(0));
+    in.assign(pt.size(), std::vector<double>(0));
+    out.assign(pt.size(), std::vector<double>(0));
+    delta.assign(pt.size(), std::vector<double>(0));
     for (int i = 0; i < int(pt.size()); ++i) {
-        in[i] = out[i] = delta[i] = vector<double>(pt[i]);
+        in[i] = out[i] = delta[i] = std::vector<double>(pt[i]);
     }
 }
 
-Perceptron::Perceptron(const vector<Matrix>& a) {
+Perceptron::Perceptron(const std::vector<Matrix>& a) {
     in.clear();
     out.clear();
     delta.clear();
     vec = a;
     for (int i = 0; i < int(a.size()); ++i) {
-        in.push_back(vector<double>(a[i].n));
-        out.push_back(vector<double>(a[i].n));
-        delta.push_back(vector<double>(a[i].n));
+        in.push_back(std::vector<double>(a[i].n));
+        out.push_back(std::vector<double>(a[i].n));
+        delta.push_back(std::vector<double>(a[i].n));
     }
     if (!a.empty()) {
-        in.push_back(vector<double>(a.back().m));
-        out.push_back(vector<double>(a.back().m));
-        delta.push_back(vector<double>(a.back().m));
+        in.push_back(std::vector<double>(a.back().m));
+        out.push_back(std::vector<double>(a.back().m));
+        delta.push_back(std::vector<double>(a.back().m));
     }
 }
 
-vector<double> Perceptron::run(const vector<double>& input) {
+std::vector<double> Perceptron::run(const std::vector<double>& input) {
     Matrix a(input);
     in[0] = input;
     for (int i = 0; i < a.n; ++i) {
@@ -61,20 +61,20 @@ vector<double> Perceptron::run(const vector<double>& input) {
     return a[0];
 }
 
-string Perceptron::arch() const {
-    string s = "{";
+std::string Perceptron::arch() const {
+    std::string s = "{";
     for (int i = 0; i < int(vec.size()); ++i) {
-        s += to_string(vec[i].n) + ", ";
+        s += std::to_string(vec[i].n) + ", ";
     }
-    s += to_string(vec.back().m) + "}";
+    s += std::to_string(vec.back().m) + "}";
     return s;
 }
 
-double difference(const vector<double>& a, const vector<double>& b) {
+double difference(const std::vector<double>& a, const std::vector<double>& b) {
     assert(a.size() == b.size());
     double res = 0;
     for (int i = 0; i < int(a.size()); ++i) {
-        res += abs(a[i] - b[i]); 
+        res += abs(a[i] - b[i]);
     }
     return res;
 }
@@ -100,9 +100,9 @@ void Perceptron::change(double n) {
     }
 }
 
-void Perceptron::teach(const vector<double>& input, const vector<double>& correct, double n, int steps) {
+void Perceptron::teach(const std::vector<double>& input, const std::vector<double>& correct, double n, int steps) {
     for (int step = 0; step < steps; step++) {
-        vector<double> output = run(input);
+        std::vector<double> output = run(input);
         for (int j = 0; j < int(output.size()); ++j) {
             delta.back()[j] = (correct[j] - output[j]) * fs(in.back()[j]);
         }
@@ -110,7 +110,7 @@ void Perceptron::teach(const vector<double>& input, const vector<double>& correc
     }
 }
 
-vector<double> Perceptron::d() {
+std::vector<double> Perceptron::d() {
     return delta[0];
 }
 
@@ -144,14 +144,14 @@ const Matrix& Perceptron::operator[](int x) const {
     return vec[x];
 }
 
-void Perceptron::read(ifstream& in) {
+void Perceptron::read(std::ifstream& in) {
     int n;
     in >> n;
-    vector<int> sz(n);
+    std::vector<int> sz(n);
     for (int i = 0; i < n; ++i) {
         in >> sz[i];
     }
-    vector<Matrix> vec(n - 1);
+    std::vector<Matrix> vec(n - 1);
     for (int i = 0; i < n - 1; ++i) {
         vec[i] = Matrix(sz[i], sz[i + 1]);
         in >> vec[i];
@@ -159,7 +159,7 @@ void Perceptron::read(ifstream& in) {
     (*this) = Perceptron(vec);
 }
 
-void Perceptron::write(ofstream& out) {
+void Perceptron::write(std::ofstream& out) {
     int n = size();
     out << n << "\n";
     for (int i = 0; i < n - 1; ++i) {

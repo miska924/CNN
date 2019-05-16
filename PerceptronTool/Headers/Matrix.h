@@ -5,12 +5,12 @@ class Matrix {
         Matrix();
         Matrix(int n_);
         Matrix(int n_, int m_, bool rnd = false);
-        Matrix(const vector<double>& v);
-        Matrix(const vector<vector<double> >& v);
+        Matrix(const std::vector<double>& v);
+        Matrix(const std::vector<std::vector<double> >& v);
         ~Matrix();
 
-        vector<double>& operator[](int x);
-        const vector<double>& operator[](int x) const;
+        std::vector<double>& operator[](int x);
+        const std::vector<double>& operator[](int x) const;
 
         Matrix operator*(const Matrix& a);
         Matrix operator*=(const Matrix& a);
@@ -21,5 +21,5 @@ class Matrix {
         std::vector<std::vector<double> > vec;
 };
 
-istream& operator>>(istream& in, Matrix &a);
-ostream& operator<<(ostream& out, const Matrix& a);
+std::istream& operator>>(std::istream& in, Matrix &a);
+std::ostream& operator<<(std::ostream& out, const Matrix& a);

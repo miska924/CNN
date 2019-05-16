@@ -7,22 +7,19 @@ make difference between ZERO and ONE on a picture you drawn
 You can use this tool only if you have linux
 First of all you need to install something to run my tool
 
-  sudo apt-get install freeglut3 freeglut3-dev libglew1.5 libglew1.5-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev mesa-common-dev
   sudo apt-get install libboost-dev
+  sudo apt-get install libjpeg-dev
+  sudo add-apt-repository universe
+  sudo apt update
+  sudo apt install freeglut3-dev
 
 When you've done it you should make some files executable
 
-  sudo chmod +x build
-  sudo chmod +x buildCNNTool
-  sudo chmod +x buildPerceptronTool
-  sudo chmod +x buildImageTool
+  sudo chmod +x build*
 
 You need to build project
 
-  ./buildImageTool
-  ./buildPerceptronTool
-  ./buildCNNTool
-  ./build
+  ./buildAll
 
 You can just run binary file to make sure that it works(but not so perfect)
 

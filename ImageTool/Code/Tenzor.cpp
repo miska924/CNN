@@ -1,8 +1,8 @@
 Tenzor::Tenzor(int n, int m, int p) {
-    a.assign(n, vector<vector<int> >(m, vector<int>(p)));
+    a.assign(n, std::vector<std::vector<int> >(m, std::vector<int>(p)));
 }
 
-Tenzor::Tenzor(const string& path) {
+Tenzor::Tenzor(const std::string& path) {
     (*this).read(path);
 }
 
@@ -10,11 +10,11 @@ Tenzor::~Tenzor() {
     a.clear();
 }
 
-void Tenzor::read(const string& path) {
-    ifstream in(path.c_str());
+void Tenzor::read(const std::string& path) {
+    std::ifstream in(path.c_str());
     int x, y, z;
     in >> x >> y >> z;
-    a.assign(x, vector<vector<int> >(y, vector<int>(z)));
+    a.assign(x, std::vector<std::vector<int> >(y, std::vector<int>(z)));
     for (int k = 0; k < z; ++k) {
         for (int i = 0; i < x; ++i) {
             for (int j = 0; j < y; ++j) {
@@ -25,8 +25,8 @@ void Tenzor::read(const string& path) {
     in.close();
 }
 
-void Tenzor::write(const string& path) const {
-    ofstream out(path.c_str());
+void Tenzor::write(const std::string& path) const {
+    std::ofstream out(path.c_str());
     out << n() << " " << m() << " " << p() << "\n";
     for (int k = 0; k < p(); ++k) {
         out << "\n";
@@ -59,10 +59,10 @@ int Tenzor::p() const {
     return a[0][0].size();
 }
 
-vector<vector<int> >& Tenzor::operator[](int x) {
+std::vector<std::vector<int> >& Tenzor::operator[](int x) {
     return a[x];
 }
 
-const vector<vector<int> >& Tenzor::operator[](int x) const {
+const std::vector<std::vector<int> >& Tenzor::operator[](int x) const {
     return a[x];
 }

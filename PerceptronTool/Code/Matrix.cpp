@@ -5,7 +5,7 @@ Matrix::Matrix() {
 
 Matrix::Matrix(int n_ ) {
     n = m = n_;
-    vec.assign(n, vector<double>(n, 0));
+    vec.assign(n, std::vector<double>(n, 0));
     for (int i = 0; i < n; ++i) {
         vec[i][i] = 1;
     }
@@ -14,7 +14,7 @@ Matrix::Matrix(int n_ ) {
 Matrix::Matrix(int n_, int m_, bool rnd) {
     n = n_;
     m = m_;
-    vec.assign(n, vector<double>(m, 0));
+    vec.assign(n, std::vector<double>(m, 0));
     if (rnd) {
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
@@ -24,10 +24,10 @@ Matrix::Matrix(int n_, int m_, bool rnd) {
     }
 }
 
-Matrix::Matrix(const vector<double>& v) {
+Matrix::Matrix(const std::vector<double>& v) {
     n = 1;
     m = v.size();
-    vec.resize(1, vector<double>(0));
+    vec.resize(1, std::vector<double>(0));
     vec[0] = v;
 }
 
@@ -42,14 +42,14 @@ Matrix::Matrix(const vector<double>& v) {
 //     return 0;
 // }
 
-Matrix::Matrix(const vector<vector<double> >& v) {
+Matrix::Matrix(const std::vector<std::vector<double> >& v) {
     if (v.empty()) {
         n = m = 0;
         vec.clear();
     }
     n = v.size();
     m = v[0].size();
-    vec.resize(v.size(), vector<double>(0));
+    vec.resize(v.size(), std::vector<double>(0));
     for (int i = 0; i < int(v.size()); ++i) {
         vec[i] = v[i];
     }
@@ -60,12 +60,12 @@ Matrix::~Matrix() {
     n = m = 0;
 }
 
-vector<double>& Matrix::operator[](int x) {
+std::vector<double>& Matrix::operator[](int x) {
     assert(x < int(vec.size()));
     return vec[x];
 }
 
-const vector<double>& Matrix::operator[](int x) const {
+const std::vector<double>& Matrix::operator[](int x) const {
     assert(x < int(vec.size()));
     return vec[x];
 }
@@ -104,7 +104,7 @@ Matrix Matrix::operator^=(int a) {
     return (*this) = (*this) ^ a;
 }
 
-istream& operator>>(istream& in, Matrix& a) {
+std::istream& operator>>(std::istream& in, Matrix& a) {
     for (int i = 0; i < a.n; ++i) {
         for (int j = 0; j < a.m; ++j) {
             if (!(in >> a[i][j])) {
@@ -115,7 +115,7 @@ istream& operator>>(istream& in, Matrix& a) {
     return in;
 }
 
-ostream& operator<<(ostream& out, const Matrix& a) {
+std::ostream& operator<<(std::ostream& out, const Matrix& a) {
     for (int i = 0; i < a.n; ++i) {
         for (int j = 0; j < a.m; ++j) {
             out << a[i][j] << " ";
