@@ -141,7 +141,7 @@ void CNN::teach(const Image& im, const std::vector<double>& correct, double n) {
                                 if ((0 <= i + di && i + di < out[lay].h()) &&
                                     (0 <= j + dj && j + dj < out[lay].w())) {
                                         a[lay][k][k1][a[lay][k].h() / 2 + di][a[lay][k].w() / 2 + dj] +=
-                                            delta[lay + 1][k][i][j] * n * out[lay][k1][i + di][j + dj];
+                                            delta[lay + 1][k][i][j] * n * out[lay][k1][i + di][j + dj] / (i * j);
                                 }
                             }
                         }

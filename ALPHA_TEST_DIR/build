@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd ..
+
+./buildPerceptronTool
+
+g++ ALPHA_TEST_DIR/main.cpp PerceptronTool.o -o ALPHA_TEST_DIR/bin \
+    -std=c++17 -O3 -Wall -Wextra -std=c++17 -I PerceptronTool/Headers/

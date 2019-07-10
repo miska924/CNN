@@ -155,7 +155,7 @@ void run(string netfile) {
 }
 
 int main() {
-    // teach("CNN_01_boosted");
+    // teach("CNN_02");
     run("CNN_01_boosted");
     return 0;
 }
