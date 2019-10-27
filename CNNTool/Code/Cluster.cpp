@@ -1,5 +1,12 @@
-Cluster::Cluster(int sz, const Layer& lay) {
-    a.assign(sz, lay);
+Cluster::Cluster(int sz, const Layer& lay, bool rnd) {
+    if (!rnd) {
+        a.assign(sz, lay);
+    } else {
+        a.clear();
+        for (int i = 0; i < sz; ++i) {
+            a.push_back(Layer(lay.size(), lay.h(), lay.w(), true));
+        }
+    }
 }
 
 Cluster::~Cluster() {

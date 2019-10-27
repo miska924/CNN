@@ -1,45 +1,36 @@
-CNN::CNN() {
-    a.clear();
-    p = Perceptron();
-}
-
-CNN::~CNN() {
-    a.clear();
-    p = Perceptron();
-}
-
-CNN::CNN(const std::string& path) {
-    (*this).read(path);
+CNN::CNN(const std::string& fileName) {
+  read(fileName);
 }
 
 CNN::CNN(const std::vector<int>& cl, std::vector<int> pt) {
-    int cur = 3;
-    a.assign(cl.size(), Cluster());
-    for (int i = 0; i < int(a.size()); ++i) {
-        a[i] = Cluster(cl[i], Layer(cur, 3, 3, true));
-        for (int j = 0; j < cl[i]; ++j) {
-            a[i][j] = Layer(cur, 3, 3, true);
-        }
-        cur = cl[i];
+// TODO : REWRITE the folowing function
+  int cur = 3;
+  a.assign(cl.size(), Cluster());
+  for (int i = 0; i < int(a.size()); ++i) {
+    a[i] = Cluster(cl[i], Layer(cur, 3, 3, true), true);
+    for (int j = 0; j < cl[i]; ++j) {
+      a[i][j] = Layer(cur, 3, 3, true);
     }
-    reverse(pt.begin(), pt.end());
-    clear();
-    pt.push_back(out.back().size() * out.back().h() * out.back().w());
-    reverse(pt.begin(), pt.end());
-    p = Perceptron(pt, true);
+    cur = cl[i];
+  }
+  reverse(pt.begin(), pt.end());
+  clear();
+  pt.push_back(out.back().size() * out.back().h() * out.back().w());
+  reverse(pt.begin(), pt.end());
+  p = Perceptron(pt, true);
 }
 
 void CNN::read(const std::string& path) {
-    std::   ifstream inp(path.c_str());
-    int sz;
-    inp >> sz;
-    a.assign(sz, Cluster());
-    for (int i = 0; i < sz; ++i) {
-        a[i].read(inp);
-    }
-    p.read(inp);
-    inp.close();
-    clear();
+  std::ifstream in(path.c_str());
+  int sz;
+  in >> sz;
+  a.assign(sz, Cluster());
+  for (int i = 0; i < sz; ++i) {
+    a[i].read(in);
+  }
+  p.read(in);
+  in.close();
+  clear();
 }
 
 void CNN::write(const std::string& path) {

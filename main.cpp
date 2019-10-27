@@ -65,7 +65,7 @@ void put() {
 
 inline int teach(string netfile) {
     srand(time(NULL));
-    CNN net(netfile);
+    CNN net(vector<int>{4, 8, 16, 8, 4, 2}, vector<int>{8, 2});
     net.write("CNNtemp");
     cerr << net.arch() << endl;
     get("one");
@@ -148,6 +148,45 @@ inline int teach(string netfile) {
     return 0;
 }
 
+inline int teach2(string netfile) {
+    srand(time(NULL));
+    CNN net({4, 8, 16, 16, 10, 8}, {4, 2});
+    // net.write("CNN_02");
+    cerr << net.arch() << endl;
+    vector<pair<Image, vector<double> > > all;
+    while (true) {
+        Image cur;
+        cur.paint();
+        int ans;
+        cin >> ans;
+        vector<double> need(2);
+        if (ans == 1) {
+            need[1] = 1;
+        } else if (ans == 0) {
+            need[0] = 1;
+        }
+        all.push_back(pair<Image, vector<double> >{cur, need});
+        double error = 2;
+        while (error > 0.1) {
+            for (int j = 0; j < 10; ++j) {
+                error = 0;
+                random_shuffle(all.begin(), all.end());
+                for (int i = 0; i < all.size(); ++i) {
+                    net.teach(all[i].first, all[i].second, 0.5);
+                    vector<double> res = net.run(all[i].first);
+                    error = max(error, abs(all[i].second[0] - res[0]) +
+                                    abs(all[i].second[1] - res[1]));
+                }
+                cout << "error : " << error << endl;
+            }
+
+            net.write("CNN_02");
+        }
+        net.write("CNN_02");
+    }
+    return 0;
+}
+
 void run(string netfile) {
     CNN net(netfile);
     cout << "0-1 DETECTOR\narch: " << net.arch() << endl;
@@ -161,7 +200,7 @@ void run(string netfile) {
 }
 
 int main() {
-    // teach("CNN_01_boosted");
+    // teach2("CNN_02");
     run("CNN_01_boosted");
     return 0;
 }

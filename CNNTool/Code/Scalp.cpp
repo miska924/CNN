@@ -1,9 +1,10 @@
 Scalp::Scalp(int h, int w, bool rnd) {
     a.assign(h, std::vector<double>(w));
     if (rnd) {
+        // std::cout << "." << std::endl;
         for (int i = 0; i < h; ++i) {
             for (int j = 0; j < w; ++j) {
-                a[i][j] = double(rand() % 20000 - 10000) / 10000;
+                a[i][j] = double(rand() % 200 - 100) / 100.0;
             }
         }
     }
@@ -48,12 +49,7 @@ void Scalp::write(std::ofstream& out) {
     for (int i = 0; i < h(); ++i) {
         out << "    ";
         for (int j = 0; j < w(); ++j) {
-            if (a[i][j] > 0) {
-                out << "+";
-            } else {
-                out << "-";
-            }
-            out << std::fixed << std::setprecision(7) << abs(a[i][j]) << " ";
+            out << std::setprecision(7) << std::fixed << a[i][j] << " ";
         }
         out << "\n";
     }

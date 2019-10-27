@@ -1,6 +1,6 @@
 class Cluster {
     public:
-        Cluster(int sz = 0, const Layer& lay = Layer());
+        Cluster(int sz = 0, const Layer& lay = Layer(), bool rnd = false);
         ~Cluster();
         void read(std::ifstream& in);
         void write(std::ofstream& out);
