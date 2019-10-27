@@ -36,7 +36,7 @@ This is loop, so you can draw while you want.
 
 You can quit my tool (CTRL + C).
 
--
+---
 ### P.S.
 
 I'm writing this project without any neural-network libs
