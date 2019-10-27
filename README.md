@@ -12,7 +12,7 @@ First of all you need to install something to run my tool
 	sudo apt-get install libjpeg-dev
 	sudo add-apt-repository universe
 	sudo apt update
-	sudo apt install freeglut3-dev.
+	sudo apt install freeglut3-dev
 
 When you've done it you should make some files executable
 
