@@ -2,7 +2,8 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <boost/gil/extension/io/jpeg_io.hpp>
+//#include <boost/gil/extension/io/jpeg_io.hpp>
+#include <boost/gil/extension/io/jpeg.hpp>
 #include <GL/freeglut.h>
 #include <time.h>
 

@@ -16,7 +16,8 @@ Image::~Image() {
 
 void Image::read(const std::string& path) {
     boost::gil::rgb8_image_t img;
-    boost::gil::jpeg_read_image(path.c_str(), img);
+    //boost::gil::jpeg_read_image(path.c_str(), img);
+    boost::gil::read_image(path.c_str(), img, boost::gil::jpeg_tag());
     a.assign(img.height(), std::vector<std::vector<int> >(img.width(), std::vector<int>(3, 0)));
     for (int i = 0; i < img.width(); ++i) {
         for (int j = 0; j < img.height(); ++j) {
@@ -48,7 +49,8 @@ void Image::write(const std::string& path) const {
             }
         }
     }
-    boost::gil::jpeg_write_view(path.c_str(), view(img));
+    //boost::gil::jpeg_write_view(path.c_str(), view(img));
+    boost::gil::write_view(path.c_str(), view(img), boost::gil::jpeg_tag());
 }
 
 int Image::n() const {
