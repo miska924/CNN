@@ -4,6 +4,8 @@
 I am in progress for this project, so current aim is to
 make difference between ZERO and ONE on a picture you draw
 
+![](demo.gif)
+
 You can use this tool only if you have linux
 
 First of all you need to install something to run my tool
